@@ -23,8 +23,8 @@ public class PlayerMove : MonoBehaviour
     //필요속성: 이동속도
     public float speed = 10f;
 
-    //필요속송: character controller, gravirt variable, 수직 속력 변수
-    CharacterController CharacterController;
+    //필요속송: character controller, gravity variable, 수직 속력 변수
+    CharacterController characterController;
     float gravity = -20f;
     float yVelocity = 0;
     public float jumpPower = 10f;
@@ -33,7 +33,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Start()
     {
-        CharacterController = GetComponent<CharacterController>(); // ?
+        characterController = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -44,15 +44,15 @@ public class PlayerMove : MonoBehaviour
         float v = Input.GetAxis("Vertical");
 
         //만약 점프 중이었다면 점프 전 상태로 초기화
-        if (isJumping && CharacterController.collisionFlags == CollisionFlags.Below)
+        if (isJumping && characterController.collisionFlags == CollisionFlags.Below)
         {
             isJumping = false;
             yVelocity = 0;
         }
         //바닥에 닿아있을 때 수직 속도 초기화
-        else if (CharacterController.collisionFlags == CollisionFlags.Below)
+        else if (characterController.collisionFlags == CollisionFlags.Below)
         {
-            yVelocity = 0;
+            yVelocity = 0; // 계속 쌓이는 거 초기화
         }
 
         if (Input.GetButtonDown("Jump") && !isJumping)
@@ -75,8 +75,8 @@ public class PlayerMove : MonoBehaviour
         //transform.position += dir * speed * Time.deltaTime;
 
         //2-2. character controller로 나를 이동
-        CharacterController.Move(dir * speed * Time.deltaTime);
+        characterController.Move(dir * speed * Time.deltaTime);
 
-        Debug.Log(yVelocity);
+        
     }
 }
