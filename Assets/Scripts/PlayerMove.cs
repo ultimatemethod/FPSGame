@@ -14,9 +14,8 @@ using UnityEngine;
 //2-2. 캐릭터 컨트롤러로 나를 이동
 //2-3. space 누르면 수직속도에 점프파워 적용
 
-//목적3. jump중인지 확인하고 점프 중이면 
-//
-
+//목적3: 플레이어가 피격을 당하면 hp를 damage만큼 깎는다.
+//필요속성: hp
 
 public class PlayerMove : MonoBehaviour
 {
@@ -27,8 +26,11 @@ public class PlayerMove : MonoBehaviour
     CharacterController characterController;
     float gravity = -20f;
     float yVelocity = 0;
-    public float jumpPower = 10f;
+    public float jumpPower = 10;
     public bool isJumping = false;
+
+    //필요속성: hp
+    public int hp = 10;
 
 
     private void Start()
@@ -76,7 +78,13 @@ public class PlayerMove : MonoBehaviour
 
         //2-2. character controller로 나를 이동
         characterController.Move(dir * speed * Time.deltaTime);
-
-        
     }
+
+    //목적3: 플레이어가 피격을 당하면 hp를 damage만큼 깎는다.
+    public void DamageAction(int damage)
+    {
+        hp -= damage;
+
+    }
+
 }
